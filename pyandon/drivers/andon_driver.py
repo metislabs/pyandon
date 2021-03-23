@@ -7,17 +7,8 @@ class AndonDriver(ABC):
         pass
 
     @abstractmethod
-    def usb_id_supported(self, vendor_id, product_id):
-        """
-        Returns true if this driver supports the provider vendor and product IDs.
-
-        Parameters:
-            vendor_id - string, USB vendor ID
-            product_id - string, USB product ID
-
-        Returns:
-            Boolean - Whether this product is supported by this driver.
-        """
+    def type(self):
+        "Returns the type of driver this is."
         pass
 
     @abstractmethod

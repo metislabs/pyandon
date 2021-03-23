@@ -1,6 +1,6 @@
 import pkgutil
 
-def create_drivers():
+def load_drivers():
     drivers = []
     for submodule in pkgutil.walk_packages(["drivers"]):
         if submodule.name != "driver":

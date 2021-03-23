@@ -1,6 +1,6 @@
-from .andon_driver import AndonDriver
+from .andon_usb_driver import AndonUSBDriver
 
-class Patlite(AndonDriver):
+class Patlite(AndonUSBDriver):
 
     def name(self):
         return "Patlite USB"
