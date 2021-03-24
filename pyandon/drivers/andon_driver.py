@@ -21,3 +21,21 @@ class AndonDriver(ABC):
             pattern - LightPattern
         """
         pass
+
+    @abstractmethod
+    def set_buzzer(self, pattern, tones):
+        """
+        Sets the buzzer.
+
+        Parameters:
+            pattern - BuzzerPattern
+            tones - List of BuzzerTone
+        """
+        pass
+
+    @abstractmethod
+    def clear(self):
+        """
+        Clears all lights and buzzers.
+        """
+        pass
