@@ -34,6 +34,8 @@ class Patlite(AndonUSBDriver):
             self.yellow = pattern
         elif color == LightColor.GREEN:
             self.green = pattern
+        elif color == LightColor.BLUE:
+            self.blue = pattern
         elif color == LightColor.CLEAR:
             self.clear = pattern
 
@@ -43,7 +45,13 @@ class Patlite(AndonUSBDriver):
         if self.usb_device is None:
             print("Device not instantiated")
         buf = (0x00, 0x00, 0x08, 0xff, (self.red<<4) + self.yellow, (self.green<<4) + self.blue, (self.clear<<4), 0x00)
-        ret = self.usb_device.write(1, buf, 100)
+        self.usb_device.write(1, buf, 100)
+
+    def _apply_buzzer(self):
+        if self.usb_device is None:
+            print("Device not instantiated")
+        buf = (0x00, 0x00, self.buzzer_type, (self.tone_a<<4) + self.tone_b, 0x88, 0x88, 0x80, 0x00)
+        self.usb_device.write(1, buf, 100)
 
 
 def create_driver():
