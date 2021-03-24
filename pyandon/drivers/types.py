@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, IntEnum
 
 class DriverType(Enum):
     USB = 1
@@ -11,7 +11,7 @@ class LightColor(Enum):
     BLUE = 4
     CLEAR = 5
 
-class LightPattern(Enum):
+class LightPattern(IntEnum):
     OFF = 0
     STATIC = 1
     QUICK_FLASH = 2

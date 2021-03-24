@@ -9,6 +9,10 @@ class AndonUSBDriver(AndonDriver):
         return DriverType.USB
 
     @abstractmethod
+    def create_device(self, usb_device):
+        pass
+
+    @abstractmethod
     def usb_id_supported(self, vendor_id, product_id):
         """
         Returns true if this driver supports the provider vendor and product IDs.
