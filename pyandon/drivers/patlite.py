@@ -1,3 +1,4 @@
+import usb.util
 from .andon_usb_driver import AndonUSBDriver
 from .types import LightColor
 
@@ -5,6 +6,10 @@ class Patlite(AndonUSBDriver):
 
     def __init__(self, usb_device = None):
         self.usb_device = usb_device
+        if self.usb_device is not None:
+            if self.usb_device.is_kernel_driver_active(0):
+                self.usb_device.detach_kernel_driver(0)
+            self.usb_device.set_configuration()
         self.red = 0
         self.yellow = 0
         self.green = 0
@@ -35,8 +40,10 @@ class Patlite(AndonUSBDriver):
         self._apply_lights()
 
     def _apply_lights(self):
+        if self.usb_device is None:
+            print("Device not instantiated")
         buf = (0x00, 0x00, 0x08, 0xff, (self.red<<4) + self.yellow, (self.green<<4) + self.blue, (self.clear<<4), 0x00)
-        print(buf)
+        ret = self.usb_device.write(1, buf, 100)
 
 
 def create_driver():
