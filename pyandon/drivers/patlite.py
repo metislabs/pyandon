@@ -1,6 +1,6 @@
 import usb.util
 from .andon_usb_driver import AndonUSBDriver
-from .types import LightColor
+from .types import LightColor, BuzzerNotes
 
 
 class Patlite(AndonUSBDriver):
@@ -45,10 +45,10 @@ class Patlite(AndonUSBDriver):
 
     def set_buzzer(self, pattern, tones):
         if len(tones) > 1:
-            self.tone_a = tones[0]
-            self.tone_b = tones[1]
+            self.tone_a = self._convert_hz(tones[0])
+            self.tone_b = self._convert_hz(tones[1])
         elif len(tones) == 1:
-            self.tone_a = tones[0]
+            self.tone_a = self._convert_hz(tones[0])
         self.buzzer_pattern = pattern
 
         self._apply()
@@ -63,6 +63,10 @@ class Patlite(AndonUSBDriver):
             print("Device not instantiated")
         buf = (0x00, 0x00, self.buzzer_pattern, (self.tone_a<<4) + self.tone_b, (self.red<<4) + self.yellow, (self.green<<4) + self.blue, (self.clear_light<<4), 0x00)
         self.usb_device.write(1, buf, 100)
+
+    def _convert_hz(self, hz):
+        notes = [BuzzerNotes.OFF, BuzzerNotes.A6, BuzzerNotes.BFLAT6, BuzzerNotes.B6, BuzzerNotes.C7, BuzzerNotes.DFLAT7, BuzzerNotes.D7, BuzzerNotes.EFLAT7, BuzzerNotes.E7, BuzzerNotes.F7, BuzzerNotes.GFLAT7, BuzzerNotes.G7, BuzzerNotes.AFLAT7, BuzzerNotes.A7]
+        return notes.index(min(notes, key=lambda x:abs(x - hz)))
 
 
 def create_driver():
