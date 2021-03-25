@@ -54,7 +54,7 @@ class Patlite(AndonUSBDriver):
         self._apply()
 
     def clear(self):
-        # Clear lights
+        # Clear lights and buzzer
         buf = (0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
         self.usb_device.write(1, buf, 100)
 
