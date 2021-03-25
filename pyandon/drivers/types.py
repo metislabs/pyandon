@@ -19,3 +19,10 @@ class LightPattern(IntEnum):
     FLASH_FLASH_PAUSE = 4
     FLASH_PAUSE = 5
 
+class BuzzerPattern(IntEnum):
+    OFF = 0
+    ON = 1
+    PATTERN_1 = 2
+    PATTERN_2 = 3
+    PATTERN_3 = 4
+    PATTERN_4 = 5

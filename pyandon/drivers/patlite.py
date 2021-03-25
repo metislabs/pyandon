@@ -2,6 +2,7 @@ import usb.util
 from .andon_usb_driver import AndonUSBDriver
 from .types import LightColor
 
+
 class Patlite(AndonUSBDriver):
 
     def __init__(self, usb_device = None):
@@ -14,9 +15,10 @@ class Patlite(AndonUSBDriver):
         self.yellow = 0
         self.green = 0
         self.blue = 0
-        self.clear = 0
+        self.clear_light = 0
         self.tone_a = 0
         self.tone_b = 0
+        self.buzzer_pattern = 0
 
     def name(self):
         return "Patlite USB"
@@ -37,20 +39,29 @@ class Patlite(AndonUSBDriver):
         elif color == LightColor.BLUE:
             self.blue = pattern
         elif color == LightColor.CLEAR:
-            self.clear = pattern
+            self.clear_light = pattern
 
-        self._apply_lights()
+        self._apply()
 
-    def _apply_lights(self):
-        if self.usb_device is None:
-            print("Device not instantiated")
-        buf = (0x00, 0x00, 0x08, 0xff, (self.red<<4) + self.yellow, (self.green<<4) + self.blue, (self.clear<<4), 0x00)
+    def set_buzzer(self, pattern, tones):
+        if len(tones) > 1:
+            self.tone_a = tones[0]
+            self.tone_b = tones[1]
+        elif len(tones) == 1:
+            self.tone_a = tones[0]
+        self.buzzer_pattern = pattern
+
+        self._apply()
+
+    def clear(self):
+        # Clear lights
+        buf = (0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
         self.usb_device.write(1, buf, 100)
 
-    def _apply_buzzer(self):
+    def _apply(self):
         if self.usb_device is None:
             print("Device not instantiated")
-        buf = (0x00, 0x00, self.buzzer_type, (self.tone_a<<4) + self.tone_b, 0x88, 0x88, 0x80, 0x00)
+        buf = (0x00, 0x00, self.buzzer_pattern, (self.tone_a<<4) + self.tone_b, (self.red<<4) + self.yellow, (self.green<<4) + self.blue, (self.clear_light<<4), 0x00)
         self.usb_device.write(1, buf, 100)
 
 
