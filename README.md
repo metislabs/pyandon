@@ -23,7 +23,7 @@ You can then discover all attached devices by running:
 Pick the first device and turn a light on:
 
     device = devices[0]
-    device.set_light(pyandon.LightColor.GREEN, pyandon.LightPattern.ON)
+    device.set_light(pyandon.LightColor.GREEN, pyandon.LightPattern.STATIC)
 
 Enable the buzzer, playing a two tone pattern:
 
