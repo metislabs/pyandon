@@ -29,7 +29,7 @@ from codecs import open
 from os import path
 import os
 
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 
 # Getting the dirname of the absolute path
 here = path.abspath(path.dirname(__file__))
