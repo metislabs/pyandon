@@ -92,7 +92,7 @@ for note, duration in fly_me:
         # Go back to the beginning of the list of lights
         i = 0
     # Play the note
-    device.set_buzzer(pyandon.BuzzerPattern.ON, [note])
+    device.set_buzzer(pyandon.BuzzerPattern.STATIC, [note])
     # Sleep for the length of this note
     time.sleep(duration * (60 / BPM))
 

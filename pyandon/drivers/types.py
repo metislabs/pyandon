@@ -49,7 +49,7 @@ class LightPattern(IntEnum):
 
 class BuzzerPattern(IntEnum):
     OFF = 0
-    ON = 1
+    STATIC = 1
     PATTERN_1 = 2
     PATTERN_2 = 3
     PATTERN_3 = 4
