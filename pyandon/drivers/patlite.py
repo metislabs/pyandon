@@ -92,6 +92,10 @@ class Patlite(AndonUSBDriver):
         notes = [BuzzerNotes.OFF, BuzzerNotes.A6, BuzzerNotes.BFLAT6, BuzzerNotes.B6, BuzzerNotes.C7, BuzzerNotes.DFLAT7, BuzzerNotes.D7, BuzzerNotes.EFLAT7, BuzzerNotes.E7, BuzzerNotes.F7, BuzzerNotes.GFLAT7, BuzzerNotes.G7, BuzzerNotes.AFLAT7, BuzzerNotes.A7]
         return notes.index(min(notes, key=lambda x:abs(x - hz)))
 
+    def __del__(self):
+        if self.usb_device is not None:
+            usb.util.dispose_resources(self.usb_device)
+
 
 def create_driver():
     return Patlite()
