@@ -35,6 +35,9 @@ class Patlite(AndonUSBDriver):
             if self.usb_device.is_kernel_driver_active(0):
                 self.usb_device.detach_kernel_driver(0)
             self.usb_device.set_configuration()
+        self._reset()
+
+    def _reset(self):
         self.red = 0
         self.yellow = 0
         self.green = 0
@@ -81,6 +84,7 @@ class Patlite(AndonUSBDriver):
         # Clear lights and buzzer
         buf = (0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
         self.usb_device.write(1, buf, 100)
+        self._reset();
 
     def _apply(self):
         if self.usb_device is None:
